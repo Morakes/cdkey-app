@@ -1,0 +1,45 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "GameCode宝库",
+				"navigationBarBackgroundColor": "#22272E",
+				"navigationBarTextStyle": "#C850C0",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/personal-center/personal-center",
+			"style": {
+				"navigationStyle": "custom"
+			}
+		}
+	],
+	"tabBar": {
+    "list": [
+		{
+			"pagePath": "pages/index/index",
+			"text": "CDK",
+			"iconPath": "static/tabbar-cdk.png",
+			"selectedIconPath": "static/tabbar-cdk.png"
+		},
+		{
+			"pagePath": "pages/personal-center/personal-center",
+			"text": "我的",
+			"iconPath": "static/tabbar-user-center.png",
+			"selectedIconPath": "static/tabbar-user-center.png"
+		}
+		],
+		"color": "#CCCCCC",
+		"selectedColor": "#FFFFFF",
+		"backgroundColor": "#22272E",
+		"borderStyle": "white"
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#22272E",
+		"backgroundColor": "#22272E"
+	}
+}
