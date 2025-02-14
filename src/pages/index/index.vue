@@ -1,7 +1,7 @@
 <template>
   <view class="container">
     <!-- 标题 -->
-    <view>gamecode宝库</view>
+    <NavigationBar title="gamecode宝库" :show-back="true" />
     <!-- <van-search
       v-model="searchKeyword"
       placeholder="请输入游戏名称搜索"
@@ -10,6 +10,12 @@
     /> -->
     <!-- swipe轮播图 -->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="black">
+      <van-swipe-item class="van-swipe-item">
+        <image
+          src="@/assets/image/swiper04.png"
+          mode="aspectFill"
+        />
+      </van-swipe-item>
       <van-swipe-item class="van-swipe-item">
         <image
           src="@/assets/image/swiper01.png"
@@ -31,8 +37,11 @@
     </van-swipe>
 
     <!-- 游戏卡片 -->
-    <view>热门游戏兑换码</view>
-    <view class="games-card" v-for="item in 10" :key="item">
+    <view class="games-card-title">
+      <text>热门游戏兑换码</text>
+      <text class="games-card-more">戳我更多<van-icon name="arrow" /></text>
+    </view>
+    <view v-for="item in 10" :key="item">
       <GameCard />
     </view>
   </view>
@@ -41,7 +50,7 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import GameCard from '@/components/card/GameCard.vue'
-
+import NavigationBar from '@/components/NavigationBar.vue';
 // 游戏数据
 const games = reactive([
   {
@@ -87,10 +96,10 @@ const onSearch = () => {
 .container {
   height: calc(100vh - 50px);
   padding: 10px;
-  background: url('@/assets/image/bg03.png');
-  background-size: cover;
+  background: url('@/assets/image/bg03.png') no-repeat center / cover;
   color: var(--font-color);
   overflow-y: scroll;
+  overflow-x: hidden;
   .my-swipe {
     border-radius: 10rpx;
     border: 1px solid var(--bg-layer-1); 
@@ -101,6 +110,18 @@ const onSearch = () => {
         height: 100%;
         width: 100%;
       }
+    }
+  }
+  .games-card-title {
+    margin-top: 40rpx;
+    margin-bottom: 20rpx;
+    font-size: 35rpx;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    color: var(--color-orange);
+    .games-card-more {
+      font-size: 30rpx;
     }
   }
 }

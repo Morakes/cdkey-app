@@ -1,27 +1,29 @@
 <template>
-    <view class="exchange-code-card">
-      <van-card
-        :title="code.code"
-        :desc="reward"
-        :num="isValid ? '有效' : '已过期'"
-        :thumb="'/static/default-game.png'"
-      >
-        <template #footer>
-          <van-button size="mini" @click="copyCode">复制</van-button>
-        </template>
-      </van-card>
-    </view>
-  </template>
+  <view class="exchange-code-card">
+    <van-card
+      :title="code.code"
+      :desc="reward"
+      :num="isValid ? '有效' : '已过期'"
+      thumb="@/assets/image/swiper01.png"
+    >
+      <template #footer>
+        <van-button size="mini" @click="copyCode">复制</van-button>
+      </template>
+    </van-card>
+  </view>
+</template>
   
-  <script setup>
+<script setup>
   import { ref, computed } from 'vue';
   
   const props = defineProps({
-    code: {
-      type: Object,
-      required: true,
-    },
-  });
+  code: {
+    code: String,
+    reward: String,
+    isValid: Boolean,
+    required: true
+  }
+})
   
   // 计算属性：奖励信息
   const reward = computed(() => props.code.reward);
@@ -43,8 +45,8 @@
   };
   </script>
   
-  <style scoped>
+<style scoped>
   .exchange-code-card {
     margin-bottom: 10px;
   }
-  </style>
+</style>
