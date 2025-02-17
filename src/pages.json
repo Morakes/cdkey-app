@@ -1,11 +1,18 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {
+			"^u--(.*)": "uview-plus/components/u-$1/u-$1.vue",
+			"^up-(.*)": "uview-plus/components/u-$1/u-$1.vue",
+	        "^u-([^-].*)": "uview-plus/components/u-$1/u-$1.vue"
+		}
+	},
 	"pages": [
 		{
 			"path": "pages/index/index",
 			"style": {
 				"navigationBarTitleText": "GameCode宝库",
 				"navigationBarBackgroundColor": "#22272E",
-				"navigationBarTextStyle": "#C850C0",
 				"navigationStyle": "custom"
 			}
 		},
@@ -19,8 +26,6 @@
 			"path": "pages/game-cdk/game-cdk",
 			"style": {
 				"navigationBarTitleText": "兑换码中心",
-				// "navigationBarBackgroundColor": "transparent",
-				// "navigationBarTextStyle": "#FFCC70"
 				"navigationStyle": "custom"
 			}
 		}

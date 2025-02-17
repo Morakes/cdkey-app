@@ -15,7 +15,7 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
     border-radius: 20rpx;
-    box-shadow: 2px 2px 6px white;
+    box-shadow: 2px 2px 4px rgba(56, 56, 56, 0.5);
     width: 100%;
   }
   </style>

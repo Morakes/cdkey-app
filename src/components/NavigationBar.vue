@@ -1,6 +1,6 @@
 <template>
   <view class="navigation-bar">
-    <van-icon name="arrow-left" v-show="showBack" @click="goback" class="back-icon" />
+     <up-icon name="arrow-left" class="back-icon" @click="goback" color="" size="20" v-show="showBack" />
     <text class="title">{{ title }}</text>
   </view>
 </template>
@@ -14,16 +14,15 @@ const props = defineProps({
   }
 })
 
-
 function goback() {
-  // uni.navigateBack()
+
   uni.switchTab({
     url: '/pages/index/index'
   })
 }
 </script>
 
-<style lang="css" scoped>
+<style scoped lang="scss">
 .navigation-bar {
   height: 44px;
   width: 750rpx;
@@ -32,13 +31,14 @@ function goback() {
   color: var(--color-orange);
   font-size: 28rpx;
   font-weight: 600;
-  text-align: center;
+  position: relative;
   .back-icon {
-    flex-basis: 50%;
-    font-size: 30rpx;
+    position: absolute;
+    left: 10rpx;
   }
   .title {
-    transform: translate(-50%, 0);
+    flex: 1;
+    text-align: center;
   }
 }
 </style>

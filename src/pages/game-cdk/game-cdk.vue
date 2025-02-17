@@ -1,28 +1,43 @@
 <template>
   <view class="container">
     <NavigationBar :show-back="true" :title="title"  />
-    <van-tabs v-model="active" swipeable animated>
-      <van-tab title="兑换区">
-        <view v-for="item in mockCDK" :key="item.code" style="margin-bottom: 20rpx;">
-          <CdkCard :data="item"  />
-        </view>
-      </van-tab>
-      <van-tab title="游戏论坛">
-        <GameCard />
-      </van-tab>
-    </van-tabs>
+    <up-tabs 
+        :list="list1"
+        @click="(_item, index: number) => {
+          activeIndex = index;
+        }"
+        :scrollable="false" 
+        :inactive-style="{
+          color: '#ccc',
+          fontWeight: 'bold',
+        }"
+        :active-style="{
+          color: 'white',
+          fontWeight: 'bold',
+          transform: 'scale(1.05)'
+        }"
+      />
+
+    <view v-for="item in mockCDK" :key="item.code" style="margin-top: 20rpx;">
+      <CdkCard :data="item"  />
+    </view>
+
   </view>
 </template>
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
-import GameCard from '@/components/card/GameCard.vue';
 import NavigationBar from '@/components/NavigationBar.vue';
 import CdkCard from '@/components/card/CdkCard.vue';
 
-const active = ref(0)
+const activeIndex = ref(0)
 const title = ref('')
+
+const list1 = ([  
+    { name: '兑换区' },
+    { name: '游戏论坛' },
+]);  
 
 const mockCDK = [
   {
@@ -50,8 +65,8 @@ const mockCDK = [
     title: '普通兑换码',
     code: 'YD5dg3OS9aD',
     reward: '60菲林， 2资深调查员记录，3音擎能源模块',
-    isValid: true,
-    endTime: '2025-02-30'
+    isValid: false,
+    endTime: '2025-02-10'
   }
 ]
 
@@ -79,7 +94,8 @@ onLoad(() => {
 .container {
   padding: 0 10px;
   background: url('@/assets/image/swiper04.png') no-repeat center / cover;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: scroll;
 }
 :deep(.van-tabs__nav) {
   background-color: transparent;

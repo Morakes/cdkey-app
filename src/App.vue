@@ -18,10 +18,12 @@ onHide(() => {
 });
 </script>
 
-<style>
+<style lang="scss">
+@import "uview-plus/index.scss";
 .app {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 </style>

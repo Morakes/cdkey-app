@@ -4,31 +4,31 @@
 
     <!-- 用户信息 -->
     <view class="user-info">
-      <van-image
+      <!-- <van-image
         class="avatar"
         round
         width="80px"
         height="80px"
         src="/static/default-avatar.png"
         alt="头像"
-      />
+      /> -->
       <text class="nickname">用户名：{{ userInfo.nickname }}</text>
     </view>
 
     <!-- 功能模块 -->
-    <van-cell-group>
+    <!-- <van-cell-group>
       <van-cell title="我的收藏" icon="star-o" @click="onFavoritesClick" />
       <van-cell title="反馈" icon="records-o" @click="onExchangeHistoryClick" />
-    </van-cell-group>
+    </van-cell-group> -->
 
     <!-- 登录按钮 -->
     <view v-if="!isLogged" class="login-button">
-      <van-button type="primary" round block @click="onLoginClick">登录/注册</van-button>
+      <!-- <van-button type="primary" round block @click="onLoginClick">登录/注册</van-button> -->
     </view>
   </view>
 </template>
   
-  <script setup>
+  <script setup lang="ts">
   import { ref } from 'vue';
   
   // 是否已登录

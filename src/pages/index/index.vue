@@ -1,40 +1,11 @@
 <template>
   <view class="container">
     <!-- 标题 -->
-    <NavigationBar title="gamecode宝库" :show-back="true" />
-    <!-- <van-search
-      v-model="searchKeyword"
-      placeholder="请输入游戏名称搜索"
-      @search="onSearch"
-      szie="mini"
-    /> -->
+    <NavigationBar title="gamecode宝库" :show-back="false" />
+
     <!-- swipe轮播图 -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="black">
-      <van-swipe-item class="van-swipe-item">
-        <image
-          src="@/assets/image/swiper04.png"
-          mode="aspectFill"
-        />
-      </van-swipe-item>
-      <van-swipe-item class="van-swipe-item">
-        <image
-          src="@/assets/image/swiper01.png"
-          mode="aspectFill"
-        />
-      </van-swipe-item>
-      <van-swipe-item>
-        <image
-          src="@/assets/image/swiper02.png"
-          moed="aspectFill"
-        />
-      </van-swipe-item>
-      <van-swipe-item>
-        <image
-          src="@/assets/image/swiper03.png"
-          moed="aspectFill"
-        />
-      </van-swipe-item>
-    </van-swipe>
+
+    <up-swiper :list="list" :autoplay="true" :circular="true" :indicator="true" indicatorMode="dot" height="180"></up-swiper>
 
     <!-- 游戏卡片 -->
     <view class="games-card-title">
@@ -47,10 +18,16 @@
   </view>
 </template>
 
-<script setup>
-import { ref, reactive } from 'vue';
+<script setup lang="ts">
+import { reactive } from 'vue';
 import GameCard from '@/components/card/GameCard.vue'
 import NavigationBar from '@/components/NavigationBar.vue';
+import Swiper01 from '@/assets/image/swiper01.png'
+import Swiper02 from '@/assets/image/swiper02.png'
+import Swiper03 from '@/assets/image/swiper03.png'
+import Swiper04 from '@/assets/image/swiper04.png'
+
+const list = reactive([Swiper01, Swiper02, Swiper03, Swiper04]);  
 // 游戏数据
 const games = reactive([
   {
@@ -83,35 +60,17 @@ const games = reactive([
   },
 ]);
 
-// 搜索关键词
-const searchKeyword = ref('');
-
-// 搜索功能
-const onSearch = () => {
-  console.log('搜索关键字:', searchKeyword.value);
-};
 </script>
 
 <style scoped>
 .container {
   height: calc(100vh - 50px);
-  padding: 10px;
+  padding: 0 10px;
   background: url('@/assets/image/bg03.png') no-repeat center / cover;
   color: var(--font-color);
   overflow-y: scroll;
   overflow-x: hidden;
-  .my-swipe {
-    border-radius: 10rpx;
-    border: 1px solid var(--bg-layer-1); 
-    .van-swipe-item {
-      height: 300rpx;
-      border-radius: 10rpx;
-      image {
-        height: 100%;
-        width: 100%;
-      }
-    }
-  }
+
   .games-card-title {
     margin-top: 40rpx;
     margin-bottom: 20rpx;
