@@ -1,18 +1,26 @@
 <template>
   <view class="game-card" @click="goto">
     <image
-      src="@/assets/image/swiper04.png"
+      :src="props.data.cover"
       mode="aspectFill"
       class="game-image"
     />
-    <view class="game-name">绝区零专区兑换码</view>
+    <view class="game-name">{{ props.data.name+'专区兑换码' }}</view>
   </view>
 </template>
   
 <script setup lang="ts">
+import type { IGameType } from '@/pages/index/type';
+
+interface Props {
+  data: IGameType
+}
+
+const props = defineProps<Props>()
+
 function goto () {
   uni.navigateTo({
-    url: '/pages/game-cdk/game-cdk?game=绝区零',
+    url: `/pages/game-cdk/game-cdk?id=${props.data.id}`,
     animationType: 'slide-in-right',
 	  animationDuration: 200,
   })

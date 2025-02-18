@@ -24,16 +24,11 @@
 </template>
 
 <script setup lang="ts">
+import type { IGameCDKType } from '@/pages/index/type';
 import Card from './Card.vue';
 
 interface Props {
-  data: {
-    title: string;
-    code: string;
-    reward: string;
-    isValid: boolean;
-    endTime: string;
-  }
+  data: IGameCDKType
 }
 
 const props = defineProps<Props>()
@@ -56,7 +51,7 @@ const copyCode = () => {
 .cdk-card {
   position: relative;
   padding: 16px;
-  min-height: 160px;
+  min-height: 100px;
   display: flex;
   flex-direction: column;
   gap: 12px;

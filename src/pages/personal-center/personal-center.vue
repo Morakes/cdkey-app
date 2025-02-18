@@ -2,45 +2,47 @@
   <view class="personal-center">
     <!-- 用户信息 -->
     <view class="user-info">
-      <u-avatar
-        :src="userInfo.avatar || '/static/default-avatar.png'"
-        size="80"
-        @click="onAvatarClick"
+      <image
+        :src="userInfo.avatarUrl"
+        mode="aspectFill"
+        class="avatar"
       />
-      <text class="nickname">{{ userInfo.nickname }}</text>
+      <text class="nickname">{{ userInfo.nickName }}</text>
     </view>
 
     <!-- 功能模块 -->
-    <u-cell-group>
-      <u-cell
+    <up-cell-group>
+      <up-cell
         title="我的收藏"
         icon="star"
         :isLink="true"
         @click="onFavoritesClick"
       />
-      <u-cell
+      <up-cell
         title="反馈建议"
         icon="edit-pen"
         :isLink="true"
         @click="onFeedbackClick"
       />
-      <u-cell
-        v-if="isLogged"
-        title="退出登录"
-        icon="logout"
-        :isLink="true"
-        @click="onLogoutClick"
-      />
-    </u-cell-group>
+    </up-cell-group>
 
     <!-- 登录按钮 -->
     <view v-if="!isLogged" class="login-button">
-      <u-button
+      <up-button
         type="primary"
         text="登录/注册"
         shape="circle"
         block
         @click="onLoginClick"
+      />
+    </view>
+    <view v-else class="login-button">
+      <up-button
+        type="primary"
+        text="退出登录"
+        shape="circle"
+        block
+        @click="onLogoutClick"
       />
     </view>
   </view>
@@ -52,19 +54,19 @@ import { ref, onMounted } from 'vue';
 // 用户信息
 const isLogged = ref(false);
 const userInfo = ref({
-  nickname: '游客',
-  avatar: '',
+  nickName: '游客',
+  avatarUrl: 'https://haowallpaper.com/link/common/file/getCroppingImg/15024949517192512',
 });
 
 // 检查登录状态
 const checkLoginStatus = () => {
-  const token = uni.getStorageSync('token');
-  if (token) {
+  const openid = uni.getStorageSync('openid');
+  if (openid) {
     isLogged.value = true;
     // TODO: 调用获取用户信息接口
     userInfo.value = {
-      nickname: '已登录用户',
-      avatar: '',
+      nickName: '已登录用户',
+      avatarUrl: '',
     };
   }
 };
@@ -96,28 +98,53 @@ const onFeedbackClick = () => {
   });
 };
 
-const onAvatarClick = () => {
-  if (!isLogged.value) {
-    onLoginClick();
-    return;
-  }
-  // TODO: 实现修改头像功能
-};
-
 const onLoginClick = () => {
   // #ifdef H5
-  uni.navigateTo({
-    url: '/pages/login/login',
-  });
+  // do something
   // #endif
 
   // #ifdef MP-WEIXIN
   uni.getUserProfile({
     desc: '用于完善用户资料',
     success: (res) => {
-      const userInfo = res.userInfo;
-      // TODO: 调用微信登录接口
-      console.log('微信用户信息：', userInfo);
+      userInfo.value = res.userInfo;
+      uni.login({
+        provider: 'weixin',
+        success(loginRes) {
+          const code = loginRes.code;
+          console.log('登录凭证code', code);
+
+          uni.request({
+            url: 'https://api.weixin.qq.com/sns/jscode2session',
+            data: {
+              appid: 'wx32e7d00110e9b467',
+              secret: '7d8ce61ec9b7f518c1685227412a861c',
+              js_code: code,
+              grant_type:'authorization_code',
+            },
+            success(requestRes) {
+              console.log('服务器返回结果：', requestRes.data);
+              // 处理服务器返回的数据，比如保存openid,session_key等
+              uni.setStorageSync('session_key', requestRes.data.session_key);
+              uni.setStorageSync('openid', requestRes.data.openid);
+              isLogged.value = true;
+              
+              uni.showToast({
+                title: '登录成功',
+                icon: 'success'
+              });
+            },
+            fail: (err) => {
+              console.error('请求服务器失败：', err);
+              uni.showToast({
+                title: '登录失败',
+                icon: 'none'
+              });
+            }
+          })
+          
+        },
+      })
     },
     fail: () => {
       uni.showToast({
@@ -135,11 +162,11 @@ const onLogoutClick = () => {
     content: '确认退出登录？',
     success: (res) => {
       if (res.confirm) {
-        uni.removeStorageSync('token');
+        uni.removeStorageSync('openid');
         isLogged.value = false;
         userInfo.value = {
-          nickname: '游客',
-          avatar: '',
+          nickName: '游客',
+          avatarUrl: '',
         };
         uni.showToast({
           title: '已退出登录',
@@ -159,20 +186,29 @@ onMounted(() => {
 .personal-center {
   box-sizing: border-box;
   padding: 20px;
-  min-height: calc(100vh - 50px);
+  // #if MP-WEIXIN
+  height: 100vh;
+  // #endif
+  // #if H5
+  height: calc(100vh - var(--window-bottom));
+  // #endif
   width: 100%;
-  background: url('@/assets/image/swiper04.png') no-repeat center / cover;
+  background: url('https://haowallpaper.com/link/common/file/getCroppingImg/15024949517192512') no-repeat center / cover;
 
   .user-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 30px 0;
-
+    .avatar {
+      width: 150rpx;
+      height: 150rpx;
+      border-radius: 50%;
+    }
     .nickname {
       margin-top: 15px;
       font-size: 18px;
-      color: #333;
+      color: var(--font-color);
       font-weight: 500;
     }
   }

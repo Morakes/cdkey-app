@@ -12,8 +12,8 @@
       <text>热门游戏兑换码</text>
       <text class="games-card-more">戳我更多<van-icon name="arrow" /></text>
     </view>
-    <view v-for="item in 10" :key="item">
-      <GameCard />
+    <view v-for="item in gameLists" :key="item.name">
+      <GameCard :data="item" />
     </view>
   </view>
 </template>
@@ -22,6 +22,7 @@
 import { reactive } from 'vue';
 import GameCard from '@/components/card/GameCard.vue'
 import NavigationBar from '@/components/NavigationBar.vue';
+import { gameLists } from './config';
 
 const list = reactive([
   'https://haowallpaper.com/link/common/file/getCroppingImg/15188352915705152',
@@ -30,47 +31,22 @@ const list = reactive([
   'https://haowallpaper.com/link/common/file/getCroppingImg/15465600005345600'
 ]);
 
-const games = reactive([
-  {
-    name: '绝区零',
-    exchangeCodes: [
-      {
-        code: 'ZZZFREE100',
-        expirationDate: '2024-07-11 23:59:59',
-        reward: '100 钻石',
-        isValid: true,
-      },
-      {
-        code: 'ZZZ888',
-        expirationDate: '2024-12-31 23:59:59',
-        reward: '888 金币',
-        isValid: true,
-      },
-    ],
-  },
-  {
-    name: '鸣潮',
-    exchangeCodes: [
-      {
-        code: 'MINGCHAO666',
-        expirationDate: '2025-06-30 23:59:59',
-        reward: '666 钻石',
-        isValid: true,
-      },
-    ],
-  },
-]);
-
 </script>
 
 <style scoped lang="scss">
 .container {
-  min-height: calc(100vh - var(--status-bar-height) - var(--navigation-bar-height));
+  // #if MP-WEIXIN
+  height: 100vh;
+  // #endif
+  // #if H5
+  height: calc(100vh - var(--window-bottom));
+  // #endif
   padding: 0 10px;
   padding-top: var(--status-bar-height);
   background: url('https://haowallpaper.com/link/common/file/getCroppingImg/15024949517192512') no-repeat center / cover;
   color: var(--font-color);
-  overflow-x: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   .games-card-title {
     margin-top: 40rpx;
     margin-bottom: 20rpx;

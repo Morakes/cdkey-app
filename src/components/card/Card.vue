@@ -9,8 +9,8 @@
   
   <style lang="scss" scoped>
   .card {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     background-color: rgba(255, 255, 255, 0.11);
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-sizing: border-box;
