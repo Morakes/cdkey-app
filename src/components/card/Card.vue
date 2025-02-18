@@ -7,7 +7,7 @@
   <script setup lang="ts">
   </script>
   
-  <style lang="css" scoped>
+  <style lang="scss" scoped>
   .card {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);

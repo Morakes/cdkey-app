@@ -20,6 +20,8 @@ onHide(() => {
 
 <style lang="scss">
 @import "uview-plus/index.scss";
+@import './assets/css/variables.css';
+
 .app {
   height: 100vh;
   display: flex;

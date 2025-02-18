@@ -90,17 +90,12 @@ onLoad(() => {
 
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .container {
   padding: 0 10px;
-  background: url('@/assets/image/swiper04.png') no-repeat center / cover;
+  padding-top: var(--status-bar-height);
+  background: url('https://haowallpaper.com/link/common/file/getCroppingImg/c13768537e975b7515f21add753569e1') no-repeat center / cover;
   height: 100vh;
   overflow: scroll;
-}
-:deep(.van-tabs__nav) {
-  background-color: transparent;
-}
-:deep(.van-tab) {
-  color: var(--font-color);
 }
 </style>

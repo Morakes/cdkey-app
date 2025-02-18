@@ -19,7 +19,7 @@ function goto () {
 }
 </script>
   
-<style scoped lang="css">
+<style scoped lang="scss">
 .game-card {
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);

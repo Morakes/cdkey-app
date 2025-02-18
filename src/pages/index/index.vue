@@ -22,13 +22,14 @@
 import { reactive } from 'vue';
 import GameCard from '@/components/card/GameCard.vue'
 import NavigationBar from '@/components/NavigationBar.vue';
-import Swiper01 from '@/assets/image/swiper01.png'
-import Swiper02 from '@/assets/image/swiper02.png'
-import Swiper03 from '@/assets/image/swiper03.png'
-import Swiper04 from '@/assets/image/swiper04.png'
 
-const list = reactive([Swiper01, Swiper02, Swiper03, Swiper04]);  
-// 游戏数据
+const list = reactive([
+  'https://haowallpaper.com/link/common/file/getCroppingImg/15188352915705152',
+  'https://haowallpaper.com/link/common/file/getCroppingImg/15274494849158464',
+  'https://haowallpaper.com/link/common/file/getCroppingImg/a9045286aa9b50dcc09302eff83b328a',
+  'https://haowallpaper.com/link/common/file/getCroppingImg/15465600005345600'
+]);
+
 const games = reactive([
   {
     name: '绝区零',
@@ -62,15 +63,14 @@ const games = reactive([
 
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
-  height: calc(100vh - 50px);
+  min-height: calc(100vh - var(--status-bar-height) - var(--navigation-bar-height));
   padding: 0 10px;
-  background: url('@/assets/image/bg03.png') no-repeat center / cover;
+  padding-top: var(--status-bar-height);
+  background: url('https://haowallpaper.com/link/common/file/getCroppingImg/15024949517192512') no-repeat center / cover;
   color: var(--font-color);
-  overflow-y: scroll;
-  overflow-x: hidden;
-
+  overflow-x: scroll;
   .games-card-title {
     margin-top: 40rpx;
     margin-bottom: 20rpx;

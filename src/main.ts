@@ -1,7 +1,7 @@
 import { createSSRApp } from "vue";
 import App from "./App.vue";
 
-import '@/assets/css/variables.css'
+
 import uviewPlus from 'uview-plus'
 
 

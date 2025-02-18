@@ -52,7 +52,7 @@ const copyCode = () => {
 
 </script>
 
-<style lang="css" scoped>
+<style lang="scss" scoped>
 .cdk-card {
   position: relative;
   padding: 16px;
