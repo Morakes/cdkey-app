@@ -118,7 +118,7 @@ const onLoginClick = () => {
             url: 'https://api.weixin.qq.com/sns/jscode2session',
             data: {
               appid: 'wx32e7d00110e9b467',
-              secret: '7d8ce61ec9b7f518c1685227412a861c',
+              secret: 'xxx',
               js_code: code,
               grant_type:'authorization_code',
             },
