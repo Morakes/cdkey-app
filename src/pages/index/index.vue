@@ -4,15 +4,17 @@
     <NavigationBar title="gamecode宝库" :show-back="false" />
 
     <!-- swipe轮播图 -->
-
-    <up-swiper :list="list" :autoplay="true" :circular="true" :indicator="true" indicatorMode="dot" height="180"></up-swiper>
+    <up-swiper :list="banners" :autoplay="true" :circular="true" :indicator="true" indicatorMode="dot" height="180"></up-swiper>
 
     <!-- 游戏卡片 -->
     <view class="games-card-title">
       <text>热门游戏兑换码</text>
-      <text class="games-card-more">戳我更多<van-icon name="arrow" /></text>
+      <span class="games-card-more" @click="handleToSearch">
+        戳我更多
+        <up-icon name="arrow-right" color="" class="back-icon" size="18" />
+      </span>
     </view>
-    <view v-for="item in gameLists" :key="item.name">
+    <view v-for="item in games" :key="item.name">
       <GameCard :data="item" />
     </view>
   </view>
@@ -23,13 +25,35 @@ import { reactive } from 'vue';
 import GameCard from '@/components/card/GameCard.vue'
 import NavigationBar from '@/components/NavigationBar.vue';
 import { gameLists } from './config';
+import { onLoad } from '@dcloudio/uni-app';
+import { apiGetBannerList, apiGetGameList } from '@/apis/index.api';
+import { ref } from 'vue';
+import type { IGameType } from './type';
 
-const list = reactive([
-  'https://haowallpaper.com/link/common/file/getCroppingImg/15188352915705152',
-  'https://haowallpaper.com/link/common/file/getCroppingImg/15274494849158464',
-  'https://haowallpaper.com/link/common/file/getCroppingImg/a9045286aa9b50dcc09302eff83b328a',
-  'https://haowallpaper.com/link/common/file/getCroppingImg/15465600005345600'
-]);
+const games = ref<IGameType[]>()
+const banners = ref();
+
+function fetchList() {
+  apiGetGameList().then(res => {
+    games.value = res.data;
+  })
+};
+
+function fetchBanner() {
+  apiGetBannerList().then(res => {
+    banners.value = res.data.map((i) => i.imageUrl)
+  })
+}
+
+const handleToSearch = () => {
+  uni.navigateTo({
+    url: '/pages/game-search/game-search'
+  })
+}
+onLoad(() => {
+  fetchList();
+  fetchBanner()
+})
 
 </script>
 
@@ -57,6 +81,8 @@ const list = reactive([
     color: var(--color-orange);
     .games-card-more {
       font-size: 30rpx;
+      display: flex;
+      align-items: center;
     }
   }
 }

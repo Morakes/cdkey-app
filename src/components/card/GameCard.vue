@@ -20,7 +20,7 @@ const props = defineProps<Props>()
 
 function goto () {
   uni.navigateTo({
-    url: `/pages/game-cdk/game-cdk?id=${props.data.id}`,
+    url: `/pages/game-cdk/game-cdk?id=${props.data.id}&name=${props.data.name}`,
     animationType: 'slide-in-right',
 	  animationDuration: 200,
   })

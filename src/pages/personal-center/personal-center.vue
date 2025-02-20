@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { apiLogin } from '@/apis/login.api';
 import { ref, onMounted } from 'vue';
 
 // 用户信息
@@ -112,37 +113,22 @@ const onLoginClick = () => {
         provider: 'weixin',
         success(loginRes) {
           const code = loginRes.code;
-          console.log('登录凭证code', code);
 
-          uni.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session',
-            data: {
-              appid: 'wx32e7d00110e9b467',
-              secret: 'xxx',
-              js_code: code,
-              grant_type:'authorization_code',
-            },
-            success(requestRes) {
-              console.log('服务器返回结果：', requestRes.data);
-              // 处理服务器返回的数据，比如保存openid,session_key等
-              uni.setStorageSync('session_key', requestRes.data.session_key);
-              uni.setStorageSync('openid', requestRes.data.openid);
-              isLogged.value = true;
-              
-              uni.showToast({
-                title: '登录成功',
-                icon: 'success'
-              });
-            },
-            fail: (err) => {
-              console.error('请求服务器失败：', err);
-              uni.showToast({
-                title: '登录失败',
-                icon: 'none'
-              });
-            }
+          apiLogin(code).then((res) => {
+            const { openid, sessionKey } = res.data;
+            uni.setStorageSync('openid', openid);
+            isLogged.value = true;
+            uni.showToast({
+              title: '登录成功',
+              icon: 'success'
+            });
+          }).catch((err) => {
+            console.error('登录失败：', err);
+            uni.showToast({
+              title: '登录失败',
+              icon: 'none'
+            });
           })
-          
         },
       })
     },

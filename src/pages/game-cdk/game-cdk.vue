@@ -1,6 +1,6 @@
 <template>
   <view class="container">
-    <NavigationBar :show-back="true" :title="game?.name" />
+    <NavigationBar :show-back="true" :title="title" />
     <up-tabs 
         :list="list"
         @click="(_item, index: number) => {
@@ -18,7 +18,7 @@
         }"
       />
 
-    <view v-for="item in game?.cdkList" :key="item.code" style="margin-top: 20rpx;">
+    <view v-for="item in gameCdks" :key="item" style="margin-top: 20rpx;">
       <CdkCard :data="item"  />
     </view>
 
@@ -30,32 +30,29 @@ import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import NavigationBar from '@/components/NavigationBar.vue';
 import CdkCard from '@/components/card/CdkCard.vue';
-import { gameLists } from '../index/config';
-import type { IGameType } from '../index/type';
+import type { IGameCDKType } from '../index/type';
+import { apiGetCdks } from '@/apis/index.api';
 
-const activeIndex = ref(0)
-const game = ref<IGameType>()
-
+const gameCdks = ref<IGameCDKType[]>()
+const title = ref('')
 const list = ([
     { name: '兑换码' },
     // { name: '游戏论坛' },
 ]);
+
+const fetchCdks = (id: number) => {
+  return apiGetCdks(id).then((res) => {
+    gameCdks.value = res.data
+  })
+}
 
 onLoad(() => {
   // 获取当前页面实例
   const pages = getCurrentPages();
   const currentPage = pages[pages.length - 1];
   const options = currentPage.options;
-
-  const _game = gameLists.find((item) => item.id === Number(options.id))
-
-  game.value = _game
-  // 设置导航栏标题
-  if (game.value) {
-    uni.setNavigationBarTitle({
-      title: game.value.name
-    });
-  }
+  title.value = options.name
+  fetchCdks(Number(options.id))
 })
 
 </script>
@@ -64,7 +61,7 @@ onLoad(() => {
 .container {
   padding: 0 10px;
   padding-top: var(--status-bar-height);
-  background: url('https://haowallpaper.com/link/common/file/getCroppingImg/985b46df5a629a68cf8e8e077a5711b1') no-repeat center / cover;
+  background: url('https://haowallpaper.com/link/common/file/getCroppingImg/15477537881035072') no-repeat center / cover;
   height: 100vh;
   overflow-y: scroll;
   overflow-x: hidden;
